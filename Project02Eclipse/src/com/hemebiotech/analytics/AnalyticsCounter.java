@@ -6,9 +6,9 @@ package com.hemebiotech.analytics;
  * and the number of times this symptom appears in the file.
  */
 public class AnalyticsCounter  {	
-	
+		
 	public static void main(String[] args) {
-		ReadSymptomDataFromFile symptomsFile = new ReadSymptomDataFromFile("symptoms.txt");
+		ISymptomReader symptomsFile = new ReadSymptomDataFromFile("symptoms.txt");
 		SymptomSort symptomsOccurences = new SymptomSort(symptomsFile.GetSymptoms());
 		symptomsOccurences.MakeOutFile();
 	}
