@@ -8,14 +8,20 @@ import java.util.List;
 
 /**
  * Simple brute force implementation
+ * @author Antoine Lanselle
  */
 public class ReadSymptomDataFromFile implements ISymptomReader {
 
-	//path to the file containing all listed symptoms
+	/**
+	 * path to the file containing all listed symptoms
+	 */
 	private String filepath;
 	
 	/**
-	 * @param filepath a full or partial path to file with symptom strings in it, one per line
+	 * ReadSymptomDataFromFile constructor
+	 * 
+	 * @param filepath 
+	 * 			a full or partial path to file with symptom strings in it, one per line
 	 */
 	public ReadSymptomDataFromFile (String filepath) {
 		this.filepath = filepath;
@@ -24,24 +30,32 @@ public class ReadSymptomDataFromFile implements ISymptomReader {
 	/**
 	 * If no data is available, return an empty List
 	 * 
-	 * @return a raw listing of all Symptoms obtained from a data source, duplicates are possible/probable
+	 * @return a raw listing of all Symptoms obtained from a data source, duplicates are possible
 	 */
 	@Override
-	public List<String> GetSymptoms() {
+	public List<String> getSymptoms() {
 		ArrayList<String> result = new ArrayList<String>();
+		BufferedReader reader = null;
 		
 		if (filepath != null) {
 			try {
-				BufferedReader reader = new BufferedReader (new FileReader(filepath));
+				reader = new BufferedReader (new FileReader(filepath));
 				String line = reader.readLine();
 				
 				while (line != null) {
 					result.add(line);
 					line = reader.readLine();
 				}
-				reader.close();
 			} catch (IOException error) {
 				error.printStackTrace();
+			} finally {
+				try {
+					if (reader != null) {
+						reader.close();
+					}
+				} catch (IOException error) {
+					error.printStackTrace();
+				}
 			}
 		}
 		
